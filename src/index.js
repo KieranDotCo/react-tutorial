@@ -16,6 +16,7 @@ class Board extends React.Component {
       <Square
         value={this.props.squares[i]}
         onClick={() => this.props.onClick(i)}
+        key={i}
       />
     );
   }
@@ -31,7 +32,7 @@ class Board extends React.Component {
         squares = squares.concat(this.renderSquare(cell));
         cell++;
       }
-      board = board.concat(<div className="board-row">{squares}</div>);
+      board = board.concat(<div className="board-row" key={i}>{squares}</div>);
     };
 
     return board;
@@ -46,7 +47,8 @@ class Game extends React.Component {
         squares: Array(9).fill(null)
       }],
       stepNumber: 0,
-      xIsNext: true
+      xIsNext: true,
+      sort: 'asc'
     }
   }
 
@@ -79,6 +81,10 @@ class Game extends React.Component {
       stepNumber: history.length,
       xIsNext: !this.state.xIsNext
     });
+  }
+
+  sort(order) {
+    this.setState({sort: order});
   }
 
   jumpTo(step) {
@@ -121,6 +127,11 @@ class Game extends React.Component {
         </div>
         <div className="game-info">
           <div>{status}</div>
+          <div>
+            Sort: 
+            <button className={this.state.sort === 'asc' ? 'selected-move' : ''} onClick={() => this.sort('asc')}>Asc</button>
+            <button className={this.state.sort === 'desc' ? 'selected-move' : ''} onClick={() => this.sort('desc')}>Desc</button>
+          </div>
           <ol>{moves}</ol>
         </div>
       </div>
