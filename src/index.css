@@ -53,3 +53,7 @@ ul {
 .selected-move {
   font-weight: bold;
 }
+
+.winning-square {
+  background: teal;
+}
